@@ -39,7 +39,7 @@ class Discussion extends Model
         return $this->hasMany(Post::class);
     }
 
-    public function firstPost() :HasOne
+    public function post() :HasOne
     {
         return $this->hasone(Post::class)
         ->whereNull('parent_id');

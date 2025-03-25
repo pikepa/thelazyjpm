@@ -20,6 +20,7 @@ class DiscussionResource extends JsonResource
             'slug' => $this->slug,
             'is_pinned' => $this->isPinned(),
             'topic' => TopicResource::make($this->whenloaded('topic')),
+            "post" => PostResource::make($this->whenloaded('post')),
         ];
     }
 }
