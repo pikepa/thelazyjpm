@@ -1,10 +1,12 @@
 <script setup>
 import ForumLayout from '@/Layouts/ForumLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
+import Post from '@/Components/Forum/Post.vue';
 import { Head } from '@inertiajs/vue3';
 
 defineProps({
-    discussion: Object
+    discussion: Object,
+    posts: Object
 })
 
 
@@ -12,16 +14,26 @@ defineProps({
 
 <template>
 
-    <Head title="{{ discussion.title }}" />
+    <Head :title="discussion.title" />
 
     <ForumLayout>
-        <div class="space-y-6">
+        <div class="space-y-3">
 
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    {{ discussion.title }}
+                    <div class="flex  items-center space-x-3">
+                        <span class="inline-flex items-center rounded-lg bg-gray-100 px-3 py-0.5 text-sm text-gray-600">
+                            {{ discussion.topic.title }}
+                        </span>
+                        <template v-if="discussion.is_pinned">
+                            [Pinned]
+                        </template>
+                        <h1 class="text-lg font-medium">{{ discussion.title }}</h1>
+                    </div>
                 </div>
             </div>
+                <Post v-for="post in posts.data" :key='post.id' :post="post" />
+
         </div>
 
         <template #side>
