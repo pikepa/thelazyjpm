@@ -22,6 +22,7 @@ class DiscussionResource extends JsonResource
             'topic' => TopicResource::make($this->whenloaded('topic')),
             "post" => PostResource::make($this->whenloaded('post')),
             "latest_post" =>PostResource::make($this->whenloaded('latestPost')),
+            "participants" => PublicUserResource::collection($this->whenLoaded('participants')),
         ];
     }
 }
