@@ -21,6 +21,7 @@ class DiscussionResource extends JsonResource
             'is_pinned' => $this->isPinned(),
             'topic' => TopicResource::make($this->whenloaded('topic')),
             "post" => PostResource::make($this->whenloaded('post')),
+            "latest_post" =>PostResource::make($this->whenloaded('latestPost')),
         ];
     }
 }

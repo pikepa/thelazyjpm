@@ -24,24 +24,31 @@ class Discussion extends Model
         return !is_null($this->pinned_at);
     }
 
-    public function user() :BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function topic() :BelongsTo
+    public function topic(): BelongsTo
     {
         return $this->belongsTo(Topic::class);
     }
 
-    public function posts() :HasMany
+    public function latestPost(): HasOne
+    {
+        return $this->hasOne(Post::class)
+            ->latestOfMany();
+    }
+
+    public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
     }
 
-    public function post() :HasOne
+    // this is the top post ie without a parent
+    public function post(): HasOne
     {
         return $this->hasone(Post::class)
-        ->whereNull('parent_id');
+            ->whereNull('parent_id');
     }
 }
