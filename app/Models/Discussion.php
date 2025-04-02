@@ -55,6 +55,11 @@ class Discussion extends Model
     {
         return $this->hasMany(Post::class);
     }
+    public function replies(): HasMany
+    {
+        return $this->hasMany(Post::class)
+        ->whereNotNull('parent_id');
+    }
 
     // this is the top post ie without a parent
     public function post(): HasOne

@@ -33,6 +33,7 @@
                 <span class="!ml-1 text-sm text-gray-600" v-if="props.discussion.participants.length > 3"> + {{
                     props.discussion.participants.length -3 }} more</span>
             </div>
+            {{ discussion.replies_count }}
 
         </div>
     </div>
