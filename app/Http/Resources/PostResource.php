@@ -19,6 +19,7 @@ class PostResource extends JsonResource
         return [
             'id' => $this->id,
             'body' => $this->body,
+            'parent_id' => $this->parent_id,
             'user' =>PublicUserResource::make($this->whenLoaded('user')),
             'body_preview' => Str::limit($this->body,200),
             'created_at' => DateTimeResource::make($this->created_at)
