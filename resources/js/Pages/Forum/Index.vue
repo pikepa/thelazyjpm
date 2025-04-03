@@ -2,6 +2,7 @@
 import ForumLayout from '@/Layouts/ForumLayout.vue';
 import SelectTopic from '@/Components/SelectTopic.vue';
 import Pagination from '@/Components/Pagination.vue';
+import Navigation from '@/Components/Forum/Navigation.vue';
 import Discussion from '@/Components/Forum/Discussion.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 
@@ -40,11 +41,7 @@ import { Head } from '@inertiajs/vue3';
         </div>
 
         <template #side>
-            <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    Side
-                </div>
-            </div>
+            <Navigation />
         </template>
     </ForumLayout>
 </template>
