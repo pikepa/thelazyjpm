@@ -11,9 +11,10 @@ use App\Http\Resources\DiscussionResource;
 
 class ForumIndexController extends Controller
 {
-    public function __invoke()
+    public function __invoke(Request $request)
     {
         return inertia()->render('Forum/Index',[
+            'query' => (object) $request->query(),
             'discussions' => DiscussionResource::collection(
                 QueryBuilder::for(Discussion::class)
                 ->allowedFilters($this->allowedFilters())

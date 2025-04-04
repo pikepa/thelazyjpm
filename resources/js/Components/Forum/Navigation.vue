@@ -1,6 +1,9 @@
 <script setup >
 import { Link } from '@inertiajs/vue3';
 
+defineProps({
+    query :Object
+})
 </script>
 
 <template>
@@ -9,10 +12,10 @@ import { Link } from '@inertiajs/vue3';
             <nav>
                 <ul class="space-y-2">
                     <li>
-                        <Link href="/">All discussions</Link>
+                        <Link href="/" :class="{ 'font-bold': !query.filter && $page.url === '/' }">All discussions</Link>
                     </li>
                     <li>
-                        <Link href="/?filter[noreplies]=1">No Replies</Link>
+                        <Link href="/?filter[noreplies]=1" :class="{ 'font-bold': query.filter?.noreplies }">No Replies</Link>
                     </li>
                 </ul>
             </nav>
