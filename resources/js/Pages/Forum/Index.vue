@@ -37,7 +37,7 @@ import { Head } from '@inertiajs/vue3';
             </div>
             <div class="space-y-3">
                 <Discussion v-for="discussion in discussions.data" :key="discussion.id" :discussion="discussion" />
-                <!-- <Pagination :pagination="discussions.meta"/> -->
+                <Pagination :pagination="discussions.meta"/>
             </div>
         </div>
 
