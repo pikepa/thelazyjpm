@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\QueryFilters\NoRepliesQueryFilter;
 use App\Models\Discussion;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
+use App\Http\QueryFilters\MineQueryFilter;
 use App\Http\Resources\DiscussionResource;
+use App\Http\QueryFilters\TopicQueryFilter;
+use App\Http\QueryFilters\NoRepliesQueryFilter;
+use App\Http\QueryFilters\ParticipatingQueryFilter;
 
 class ForumIndexController extends Controller
 {
@@ -22,7 +25,7 @@ class ForumIndexController extends Controller
                 ->withCount('replies')
                 ->orderByPinned()
                 ->orderByLastPost()
-                ->paginate(1)
+                ->paginate(10)
                 ->appends($request->query())
        ) ]);
     }
@@ -30,7 +33,12 @@ class ForumIndexController extends Controller
     protected function allowedFilters()
     {
         return [
-            AllowedFilter::custom('noreplies', new NoRepliesQueryFilter())
+            AllowedFilter::custom('noreplies', new NoRepliesQueryFilter()),
+            AllowedFilter::custom('topic', new TopicQueryFilter()),
+
+
+            AllowedFilter::custom('mine', new MineQueryFilter()),
+            AllowedFilter::custom('participating', new ParticipatingQueryFilter())
         ];
     }
     

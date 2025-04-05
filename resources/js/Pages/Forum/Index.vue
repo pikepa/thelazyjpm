@@ -5,13 +5,25 @@ import Pagination from '@/Components/Pagination.vue';
 import Navigation from '@/Components/Forum/Navigation.vue';
 import Discussion from '@/Components/Forum/Discussion.vue';
 import InputLabel from '@/Components/InputLabel.vue';
+import _omitBy from 'lodash.omitby';
+import _isEmpty from 'lodash.isempty';
+import { Head, router } from '@inertiajs/vue3';
 
 defineProps({
     discussions: Object,
     query : Object
 })
 
-import { Head } from '@inertiajs/vue3';
+const filterTopic = (e) => {
+    router.visit('/', {
+        data: _omitBy({
+            'filter[topic]': e.target.value
+        }, _isEmpty),
+        preserveScroll: true
+    })
+}
+
+
 
 </script>
 
@@ -26,9 +38,13 @@ import { Head } from '@inertiajs/vue3';
                 <div class="p-6 text-gray-900">
                     <div>
                         <InputLabel for="topic" value="Topic" class="sr-only" />
-                        <SelectTopic id="topic">
-                            <option>All Topics</option>
-                            <option :value="topic.slug" v-for="topic in $page.props.topics" :key="topic.id">
+                        <SelectTopic id="topic" v-on:change="filterTopic">
+                            <option value="">All Topics</option>
+                            <option 
+                                :value="topic.slug" 
+                                v-for="topic in $page.props.topics" 
+                                :key="topic.id"
+                                :selected="query.filter?.topic === topic.slug">
                                 {{ topic.title }}
                             </option>
                         </SelectTopic>
