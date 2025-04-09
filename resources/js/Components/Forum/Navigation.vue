@@ -20,7 +20,7 @@ defineProps({
                         </Link>
                     </li>
                 </ul>
-                <ul class="space-y-2 border-t border-t-gray-300 pt-3" v-if="$page.props.auth.user">
+                <ul class="mt-3 space-y-2 border-t border-t-gray-300 pt-3" v-if="$page.props.auth.user">
                     <li>
                         <Link href="/?filter[mine]=1" :class="{ 'font-bold': query.filter?.mine }">My
                         discussions</Link>
