@@ -4,6 +4,8 @@ import TextInput from '../TextInput.vue';
 import InputLabel from '../InputLabel.vue';
 import InputError from '../InputError.vue';
 import SelectTopic from '../SelectTopic.vue';
+import TextArea from '../TextArea.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 </script>
 
 <template>
@@ -16,7 +18,7 @@ import SelectTopic from '../SelectTopic.vue';
                 <div class="flex items-start space-x-3">
                     <div class="flex-grow">
                         <div>
-                            <InputLabel for="title" value="Tilte" class="sr-only"/>
+                            <InputLabel for="title" value="Tilte" class="sr-only" />
 
                             <TextInput id="title" type="text" class="w-full" />
 
@@ -27,21 +29,20 @@ import SelectTopic from '../SelectTopic.vue';
                     <div>
                         <SelectTopic id="topic">
                             <option value="">Choose a Topic</option>
-                            <option 
-                                :value="topic.slug" 
-                                v-for="topic in $page.props.topics" 
-                                :key="topic.id">
+                            <option :value="topic.slug" v-for="topic in $page.props.topics" :key="topic.id">
                                 {{ topic.title }}
                             </option>
                         </SelectTopic>
                     </div>
                 </div>
-                <div class="mt-2">
-                    <textarea name="" rows="4" id="" class="w-full" />
+                <div class="mt-4">
+                    <TextArea class="w-full" rows="6"/>
                 </div>
             </template>
             <template v-slot:button>
-                <button type="submit">Create </button>
+                <PrimaryButton >
+                    Create
+                </PrimaryButton>
             </template>
 
 
