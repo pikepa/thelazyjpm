@@ -2,18 +2,37 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use function PHPUnit\Framework\isNull;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Discussion extends Model
 {
     use HasFactory;
+
+    protected $fillable =[
+        'title',
+        'slug',
+    ];
+
+    protected static function booted()
+    {
+        static::created(function($discussion){
+            $discussion->update(['slug' => $discussion->title]);
+
+        });
+    }
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = $this->id . '-' . Str::slug($value);
+    }
+
 
     public function scopeOrderByPinned($query)
     {
