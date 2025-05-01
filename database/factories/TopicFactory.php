@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Topic>
@@ -18,9 +18,10 @@ class TopicFactory extends Factory
     public function definition(): array
     {
         $topic = fake()->word();
+
         return [
             'title' => $topic,
-            'slug' => Str::slug($topic , "-"),
+            'slug' => Str::slug($topic, '-'),
         ];
     }
 }

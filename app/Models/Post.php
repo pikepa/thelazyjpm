@@ -10,14 +10,14 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable =['body'];
+    protected $fillable = ['body'];
 
-
-    public function discussion() :BelongsTo
+    public function discussion(): BelongsTo
     {
         return $this->belongsTo(Discussion::class);
     }
-    public function user() :BelongsTo
+
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

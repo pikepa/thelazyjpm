@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use App\Models\Topic;
-use Illuminate\Support\Str;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Discussion>
@@ -19,11 +19,12 @@ class DiscussionFactory extends Factory
      */
     public function definition(): array
     {
-        $title=fake()->sentence();
+        $title = fake()->sentence();
+
         return [
             'user_id' => User::all()->random()->id,
-            'topic_id' =>Topic::all()->random()->id,
-            'title'=> $title,
+            'topic_id' => Topic::all()->random()->id,
+            'title' => $title,
             'slug' => Str::slug($title),
 
         ];

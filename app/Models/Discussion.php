@@ -2,47 +2,45 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
-use function PHPUnit\Framework\isNull;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Str;
 
 class Discussion extends Model
 {
     use HasFactory;
 
-    protected $fillable =[
+    protected $fillable = [
         'title',
         'slug',
     ];
 
     protected static function booted()
     {
-        static::created(function($discussion){
+        static::created(function ($discussion) {
             $discussion->update(['slug' => $discussion->title]);
-
         });
     }
+
     public function setSlugAttribute($value)
     {
-        $this->attributes['slug'] = $this->id . '-' . Str::slug($value);
+        $this->attributes['slug'] = $this->id.'-'.Str::slug($value);
     }
-
 
     public function scopeOrderByPinned($query)
     {
         $query->orderBy('pinned_at', 'desc');
     }
+
     public function scopeOrderByLastPost($query)
     {
         $query->orderBy(
             Post::select('created_at')
-            ->whereColumn('posts.discussion_id','discussions.id')
+            ->whereColumn('posts.discussion_id', 'discussions.id')
             ->latest()
             ->take(1),
             'desc'
@@ -51,7 +49,7 @@ class Discussion extends Model
 
     public function isPinned()
     {
-        return !is_null($this->pinned_at);
+        return ! is_null($this->pinned_at);
     }
 
     public function user(): BelongsTo
@@ -74,6 +72,7 @@ class Discussion extends Model
     {
         return $this->hasMany(Post::class);
     }
+
     public function replies(): HasMany
     {
         return $this->hasMany(Post::class)

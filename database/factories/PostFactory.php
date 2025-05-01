@@ -20,9 +20,9 @@ class PostFactory extends Factory
     {
         return [
             'user_id' => User::all()->random()->id,
-            'discussion_id' =>Discussion::all()->random()->id,
-            'parent_id'=>'nullable',
-            'body'=>fake()->paragraph(),
+            'discussion_id' => Discussion::all()->random()->id,
+            'parent_id' => 'nullable',
+            'body' => fake()->paragraph(),
         ];
     }
 }

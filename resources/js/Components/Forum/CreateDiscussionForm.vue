@@ -26,12 +26,12 @@ const createDiscussion = () => {
         <FixedFormWrapper v-if="visible" v-on:submit.prevent="createDiscussion">
             <template v-slot:header>
                 <div class="flex items-center justify-between">
-                    <h1 class="text-lg font-medium">New Discussion</h1>
+                    <h1 class="text-lg font-medium">Start a Discussion</h1>
                     <button v-on:click="hideCreateDiscussionForm">&times</button>
                 </div>
             </template>
 
-            <template v-slot:main>
+            <template v-slot:main="{ markdownPreviewEnabled }">
                 <div class="flex items-start space-x-3">
                     <div class="flex-grow">
                         <div>
@@ -42,6 +42,7 @@ const createDiscussion = () => {
                         </div>
 
                     </div>
+     
                     <div>
                         <InputLabel for="topic" value="Topic" class="sr-only" />
                         <select id="topic" v-model="form.topic_id" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
@@ -60,7 +61,7 @@ const createDiscussion = () => {
                 </div>
                 <div class="mt-4">
                     <InputLabel for="body" value="Body" class="sr-only" />
-                    <TextArea class="w-full" rows="6" v-model="form.body"/>
+                    <TextArea v-if="!markdownPreviewEnabled" class="w-full h-48 align-top" v-model="form.body"/>
                     <InputError class="mt-2" :message="form.errors.body" />
 
                 </div>

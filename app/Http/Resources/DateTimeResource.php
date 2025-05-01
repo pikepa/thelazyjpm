@@ -16,7 +16,7 @@ class DateTimeResource extends JsonResource
     {
         return [
             'human' => $this->diffForHumans(),
-            'dateTime' => $this->toDateTimeString()
+            'dateTime' => $this->toDateTimeString(),
         ];
     }
 }

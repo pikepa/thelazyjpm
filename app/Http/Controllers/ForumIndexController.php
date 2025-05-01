@@ -2,32 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Discussion;
-use Illuminate\Http\Request;
-use Spatie\QueryBuilder\QueryBuilder;
-use Spatie\QueryBuilder\AllowedFilter;
 use App\Http\QueryFilters\MineQueryFilter;
-use App\Http\Resources\DiscussionResource;
-use App\Http\QueryFilters\TopicQueryFilter;
 use App\Http\QueryFilters\NoRepliesQueryFilter;
 use App\Http\QueryFilters\ParticipatingQueryFilter;
+use App\Http\QueryFilters\TopicQueryFilter;
+use App\Http\Resources\DiscussionResource;
+use App\Models\Discussion;
+use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ForumIndexController extends Controller
 {
     public function __invoke(Request $request)
     {
-        return inertia()->render('Forum/Index',[
+        return inertia()->render('Forum/Index', [
             'query' => (object) $request->query(),
             'discussions' => DiscussionResource::collection(
                 QueryBuilder::for(Discussion::class)
                 ->allowedFilters($this->allowedFilters())
-                ->with(['topic', 'post', 'latestPost.user','participants'])
+                ->with(['topic', 'post', 'latestPost.user', 'participants'])
                 ->withCount('replies')
                 ->orderByPinned()
                 ->orderByLastPost()
                 ->paginate(10)
                 ->appends($request->query())
-       ) ]);
+       ), ]);
     }
 
     protected function allowedFilters()
@@ -36,11 +36,8 @@ class ForumIndexController extends Controller
             AllowedFilter::custom('noreplies', new NoRepliesQueryFilter()),
             AllowedFilter::custom('topic', new TopicQueryFilter()),
 
-
             AllowedFilter::custom('mine', new MineQueryFilter()),
-            AllowedFilter::custom('participating', new ParticipatingQueryFilter())
+            AllowedFilter::custom('participating', new ParticipatingQueryFilter()),
         ];
     }
-    
-
 }
