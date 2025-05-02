@@ -21,9 +21,11 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "@github/markdown-toolbar-element": "^2.2.3",
         "lodash.isempty": "^4.4.0",
         "lodash.omitby": "^4.6.0",
         "pluralize": "^8.0.0",
-        "shiki": "^3.3.0"
+        "shiki": "^3.3.0",
+        "vite-svg-loader": "^5.1.0"
     }
 }

@@ -8,6 +8,7 @@ import TextArea from '../TextArea.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import useCreateDiscussion from '@/Composables/useCreateDiscussion.js';
 import { useForm } from '@inertiajs/vue3';
+import Svg from '../Svg.vue';
 
 const { visible , hideCreateDiscussionForm, form} = useCreateDiscussion()
 
@@ -27,7 +28,9 @@ const createDiscussion = () => {
             <template v-slot:header>
                 <div class="flex items-center justify-between">
                     <h1 class="text-lg font-medium">Start a Discussion</h1>
-                    <button v-on:click="hideCreateDiscussionForm">&times</button>
+                    <button v-on:click="hideCreateDiscussionForm">
+                        <Svg class="h-5 w-5" name='icon-close' ></Svg>
+                    </button>
                 </div>
             </template>
 
@@ -61,7 +64,7 @@ const createDiscussion = () => {
                 </div>
                 <div class="mt-4">
                     <InputLabel for="body" value="Body" class="sr-only" />
-                    <TextArea v-if="!markdownPreviewEnabled" class="w-full h-48 align-top" v-model="form.body"/>
+                    <TextArea id='body' v-if="!markdownPreviewEnabled" class="w-full h-48 align-top" v-model="form.body"/>
                     <InputError class="mt-2" :message="form.errors.body" />
 
                 </div>
