@@ -1,14 +1,17 @@
 <?php
 
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MarkdownController;
+use App\Http\Controllers\ForumIndexController;
 use App\Http\Controllers\DiscussionShowController;
 use App\Http\Controllers\DiscussionStoreController;
-use App\Http\Controllers\ForumIndexController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', ForumIndexController::class)->name('home');
 Route::get('/discussions/{discussion:slug}', DiscussionShowController::class)->name('discussions.show');
+
+Route::post('/markdown', MarkdownController::class)->name('markdown');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
