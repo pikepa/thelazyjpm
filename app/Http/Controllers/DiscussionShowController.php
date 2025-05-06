@@ -10,10 +10,10 @@ use App\Http\Resources\DiscussionResource;
 
 class DiscussionShowController extends Controller
 {
-    protected const POSTS_PER_PAGE = 10;
+    protected const POSTS_PER_PAGE = 5;
     public function __invoke(Request $request, Discussion $discussion)
     {
-        if($postId = $request->get('postId')) {
+        if($postId = $request->get('post')) {
             return redirect()->route('discussions.show',[
                 'discussion' => $discussion,
                 'page' => $this->getPageForPost($discussion, $postId),
@@ -33,12 +33,13 @@ class DiscussionShowController extends Controller
                 ->oldest()
                 ->paginate(self::POSTS_PER_PAGE)
         ),
+        'postId' => (int) $request->postId,
         ]);
     }
     protected function getPageForPost(Discussion $discussion, $postId)
     {
-
         $index = $discussion->posts->search(fn ($post) => $post->id == $postId);
         $page = (int) ceil(($index +1)/ self::POSTS_PER_PAGE);
-return $page;    }
+        return $page;    
+}
 }
