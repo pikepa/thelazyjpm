@@ -7,6 +7,7 @@ use App\Http\Controllers\MarkdownController;
 use App\Http\Controllers\PostPatchController;
 use App\Http\Controllers\PostStoreController;
 use App\Http\Controllers\ForumIndexController;
+use App\Http\Controllers\PostDestroyController;
 use App\Http\Controllers\DiscussionShowController;
 use App\Http\Controllers\DiscussionStoreController;
 
@@ -23,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/discussions', DiscussionStoreController::class)->name('discussions.store');
     Route::post('/discussions/{discussion}/posts', PostStoreController::class)->name('posts.store');
     Route::patch('/posts/{post}', PostPatchController::class)->name('posts.patch');
+    Route::delete('/posts/{post}', PostDestroyController::class)->name('posts.destroy');
 
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

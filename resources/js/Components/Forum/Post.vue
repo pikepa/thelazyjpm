@@ -35,6 +35,9 @@
                 <li v-if="post.user_can.edit">
                     <button v-on:click='editing = true' class="text-indigo-500 text-sm">Edit</button>
                 </li>
+                <li v-if="post.user_can.delete">
+                    <button v-on:click='deletePost' class="text-indigo-500 text-sm">Delete</button>
+                </li>
             </ul>
         </div>
     </div>
@@ -48,6 +51,7 @@ import InputLabel from '../InputLabel.vue';
 import PrimaryButton from '../PrimaryButton.vue';
 import InputError from '../InputError.vue';
 import { useForm } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 
@@ -62,13 +66,20 @@ const editForm = useForm({
     body: props.post.body
 })
 const editPost = () =>{
-
     editForm.patch(route('posts.patch', props.post),{
         preserveScroll: true,
         onSuccess: () => {editing.value = false}
     })
-
 }
+const deletePost = () =>{
+    if(window.confirm('Are you sure?')){
+        router.delete(route('posts.destroy', props.post),{
+            preserveScroll:true
+        })
+    }
+ 
+}
+
 
 
 </script>
