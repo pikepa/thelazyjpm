@@ -14,9 +14,9 @@
                     </time></div>
             </div>
             <div class="mt-3 w">
-                <form v-if="editing">
+                <form v-on:submit.prevent="editPost" v-if="editing">
                     <InputLabel for="body" value="Body" class="sr-only" />
-                    <TextArea v-model="editForm.body" id="body" class="w-full" />
+                    <TextArea v-model="editForm.body" id="body" class="w-full" rows="5" />
                     <InputError class="mt-2" :message="editForm.errors.body" />
                     <div class="flex items-center space-x-3">
                         <PrimaryButton>Edit</PrimaryButton>
@@ -61,7 +61,14 @@ const editing = ref(false)
 const editForm = useForm({
     body: props.post.body
 })
+const editPost = () =>{
 
+    editForm.patch(route('posts.patch', props.post),{
+        preserveScroll: true,
+        onSuccess: () => {editing.value = false}
+    })
+
+}
 
 
 </script>
