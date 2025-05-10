@@ -36,7 +36,7 @@ const createDiscussion = () => {
 
             <template v-slot:main="{ markdownPreviewEnabled }">
                 <div class="flex items-start space-x-3">
-                    <div class="flex-grow">
+                    <div class="grow">
                         <div>
                             <InputLabel for="title" value="Title" class="sr-only" />
                             <TextInput id="title" type="text" class="w-full" placeholder="Discussion Title"
@@ -48,7 +48,7 @@ const createDiscussion = () => {
      
                     <div>
                         <InputLabel for="topic" value="Topic" class="sr-only" />
-                        <select id="topic" v-model="form.topic_id" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                        <select id="topic" v-model="form.topic_id" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-xs">
                         <option value="">Choose a topic</option>
                         <option
                             :value="topic.id"

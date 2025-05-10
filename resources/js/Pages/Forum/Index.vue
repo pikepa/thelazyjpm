@@ -38,7 +38,7 @@ const filterTopic = (e) => {
     <ForumLayout>
         <div class="space-y-6">
 
-            <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+            <div class="overflow-hidden bg-white shadow-xs sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div>
                         <InputLabel for="topic" value="Topic" class="sr-only" />
