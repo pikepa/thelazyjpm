@@ -21,7 +21,7 @@ class DiscussionShowController extends Controller
             ]);
         }
 
-        $discussion->load(['topic','posts.discussion']);
+        $discussion->load(['topic','posts.discussion','solution']);
         $discussion->loadCount(['replies']);
 
         return inertia()->render('Forum/Show', [
