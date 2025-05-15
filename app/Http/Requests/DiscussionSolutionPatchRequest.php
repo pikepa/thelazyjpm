@@ -11,7 +11,7 @@ class DiscussionSolutionPatchRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->can('solve', $this->discussion); 
+        return auth()->user()->can('solve', $this->discussion);
     }
 
     /**

@@ -10,6 +10,5 @@ class SolvedQueryFilter implements Filter
     public function __invoke(Builder $query, $value, string $property)
     {
         $query->whereNotNull('solution_post_id');
-
     }
 }

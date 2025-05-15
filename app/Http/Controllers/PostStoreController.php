@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use App\Models\Discussion;
-use Illuminate\Http\Request;
 use App\Http\Requests\PostStoreRequest;
+use App\Models\Discussion;
+use App\Models\Post;
 
 class PostStoreController extends Controller
 {
@@ -18,6 +17,6 @@ class PostStoreController extends Controller
 
         $post->save();
 
-        return redirect(route('discussions.show', $discussion).'?post=' . $post->id);
+        return redirect(route('discussions.show', $discussion).'?post='.$post->id);
     }
 }

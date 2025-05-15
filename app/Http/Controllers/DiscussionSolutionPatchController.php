@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use App\Models\Discussion;
-use Illuminate\Http\Request;
 use App\Http\Requests\DiscussionSolutionPatchRequest;
+use App\Models\Discussion;
+use App\Models\Post;
 
 class DiscussionSolutionPatchController extends Controller
 {

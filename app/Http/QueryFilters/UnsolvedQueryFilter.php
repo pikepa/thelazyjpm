@@ -10,6 +10,5 @@ class UnsolvedQueryFilter implements Filter
     public function __invoke(Builder $query, $value, string $property)
     {
         $query->whereNull('solution_post_id');
-
     }
 }

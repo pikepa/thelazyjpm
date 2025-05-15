@@ -11,7 +11,7 @@ class PostStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->can('reply',$this->discussion);
+        return auth()->user()->can('reply', $this->discussion);
     }
 
     /**
@@ -22,7 +22,7 @@ class PostStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'body' => ['required']
+            'body' => ['required'],
         ];
     }
 }
