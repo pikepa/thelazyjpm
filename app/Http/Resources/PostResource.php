@@ -2,10 +2,10 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Spatie\LaravelMarkdown\MarkdownRenderer;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
+use Spatie\LaravelMarkdown\MarkdownRenderer;
 
 class PostResource extends JsonResource
 {
@@ -26,7 +26,8 @@ class PostResource extends JsonResource
             'body_preview' => Str::limit($this->body, 200),
             'created_at' => DateTimeResource::make($this->created_at),
             'user_can' => [
-                'edit' => auth()->user()->can('edit', $this->resource)]
+                'edit' => auth()->user()?->can('edit', $this->resource),
+                'delete' => auth()->user()?->can('delete', $this->resource), ],
         ];
     }
 }

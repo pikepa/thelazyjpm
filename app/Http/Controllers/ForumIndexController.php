@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\QueryFilters\MineQueryFilter;
 use App\Http\QueryFilters\NoRepliesQueryFilter;
 use App\Http\QueryFilters\ParticipatingQueryFilter;
+use App\Http\QueryFilters\SolvedQueryFilter;
 use App\Http\QueryFilters\TopicQueryFilter;
+use App\Http\QueryFilters\UnsolvedQueryFilter;
 use App\Http\Resources\DiscussionResource;
 use App\Models\Discussion;
 use Illuminate\Http\Request;
@@ -25,6 +27,11 @@ class ForumIndexController extends Controller
                 ->withCount('replies')
                 ->orderByPinned()
                 ->orderByLastPost()
+                ->tap(function ($builder) use ($request) {
+                    if (filled($request->search)) {
+                        return $builder->whereIn('id', Discussion::search($request->search)->get()->pluck('id'));
+                    }
+                })
                 ->paginate(10)
                 ->appends($request->query())
        ), ]);
@@ -35,6 +42,8 @@ class ForumIndexController extends Controller
         return [
             AllowedFilter::custom('noreplies', new NoRepliesQueryFilter()),
             AllowedFilter::custom('topic', new TopicQueryFilter()),
+            AllowedFilter::custom('solved', new SolvedQueryFilter()),
+            AllowedFilter::custom('unsolved', new UnsolvedQueryFilter()),
 
             AllowedFilter::custom('mine', new MineQueryFilter()),
             AllowedFilter::custom('participating', new ParticipatingQueryFilter()),

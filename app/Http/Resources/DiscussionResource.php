@@ -22,11 +22,14 @@ class DiscussionResource extends JsonResource
             'replies_count' => $this->replies_count,
             'topic' => TopicResource::make($this->whenloaded('topic')),
             'post' => PostResource::make($this->whenloaded('post')),
+            'solution' => PostResource::make($this->whenloaded('solution')),
             'latest_post' => PostResource::make($this->whenloaded('latestPost')),
             'participants' => PublicUserResource::collection($this->whenLoaded('participants')),
             'user_can' => [
-                'reply' => auth()->user()->can('reply', $this->resource)
-            ]
+                'reply' => auth()->user()?->can('reply', $this->resource),
+                'delete' => auth()->user()?->can('delete', $this->resource),
+                'solve' => auth()->user()?->can('solve', $this->resource),
+            ],
         ];
     }
 }

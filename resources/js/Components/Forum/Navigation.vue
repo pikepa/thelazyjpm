@@ -7,7 +7,7 @@ defineProps({
 </script>
 
 <template>
-    <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+    <div class="overflow-hidden bg-white shadow-xs sm:rounded-lg">
         <div class="p-6 text-gray-900">
             <nav class="spay-y-3">
                 <ul class="space-y-2">
@@ -17,6 +17,14 @@ defineProps({
                     </li>
                     <li>
                         <Link href="/?filter[noreplies]=1" :class="{ 'font-bold': query.filter?.noreplies }">No Replies
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/?filter[solved]=1" :class="{ 'font-bold': query.filter?.solved }">Solved
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/?filter[unsolved]=1" :class="{ 'font-bold': query.filter?.unsolved }">Unsolved
                         </Link>
                     </li>
                 </ul>

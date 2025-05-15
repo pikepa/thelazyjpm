@@ -9,15 +9,22 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 class Discussion extends Model
 {
     use HasFactory;
+    use Searchable;
 
     protected $fillable = [
         'title',
         'slug',
     ];
+
+    public function toSearchableArray()
+    {
+        return $this->only('id', 'title');
+    }
 
     protected static function booted()
     {
@@ -90,5 +97,10 @@ class Discussion extends Model
     {
         return $this->hasManyThrough(User::class, Post::class, 'discussion_id', 'id', 'id', 'user_id')
         ->distinct();
+    }
+
+    public function solution(): BelongsTo
+    {
+        return $this->belongsTo(Post::class, 'solution_post_id');
     }
 }

@@ -5,13 +5,16 @@ import Pagination from '@/Components/Pagination.vue';
 import Navigation from '@/Components/Forum/Navigation.vue';
 import Discussion from '@/Components/Forum/Discussion.vue';
 import InputLabel from '@/Components/InputLabel.vue';
+import TextInput from '@/Components/TextInput.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import _omitBy from 'lodash.omitby';
 import _isEmpty from 'lodash.isempty';
+import _debounce from 'lodash.debounce';
 import { Head, router } from '@inertiajs/vue3';
 import useCreateDiscussion from '@/Composables/useCreateDiscussion';
+import {ref , watch } from 'vue';
 
-defineProps({
+const props = defineProps({
     discussions: Object,
     query : Object
 })
@@ -27,7 +30,18 @@ const filterTopic = (e) => {
     })
 }
 
+const searchQuery = ref(props.query.search || '');
 
+const handleSearchInput = _debounce((query) => {
+    router.reload({
+        data: { search: query },
+        preserveScroll: true
+    })
+}, 500)
+
+watch(searchQuery, (query) => {
+    handleSearchInput(query)
+})
 
 </script>
 
@@ -38,8 +52,12 @@ const filterTopic = (e) => {
     <ForumLayout>
         <div class="space-y-6">
 
-            <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+            <div class="overflow-hidden bg-white shadow-xs sm:rounded-lg">
+                <div class="p-6 space-x-3 text-gray-900 flex items-center">
+                    <div class="flex-grow">
+                        <InputLabel for="search" value="Search" class="sr-only" />
+                        <TextInput v-model="searchQuery" type="search" id="search" class="w-full" placeholder="Search discussions..."/>
+                    </div>
                     <div>
                         <InputLabel for="topic" value="Topic" class="sr-only" />
                         <SelectTopic id="topic" v-on:change="filterTopic">

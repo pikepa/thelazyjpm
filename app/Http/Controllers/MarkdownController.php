@@ -10,7 +10,7 @@ class MarkdownController extends Controller
     public function __invoke(Request $request)
     {
         return response()->json([
-            'html' => app(MarkdownRenderer::class)->toHtml($request->body ?? '')
-    ]);
+            'html' => app(MarkdownRenderer::class)->toHtml($request->body ?? ''),
+        ]);
     }
 }
