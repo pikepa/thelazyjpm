@@ -1,35 +1,41 @@
-<script setup lang="ts">
-import FixedFormWrapper from './FixedFormWrapper.vue';
-import TextInput from '../TextInput.vue';
-import InputLabel from '../InputLabel.vue';
-import InputError from '../InputError.vue';
-import SelectTopic from '../SelectTopic.vue';
-import TextArea from '../TextArea.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import useCreateDiscussion from '@/Composables/useCreateDiscussion.js';
-import { useForm } from '@inertiajs/vue3';
-import Svg from '../Svg.vue';
+<script setup>
+import FixedFormWrapper from "./FixedFormWrapper.vue";
+import TextInput from "../TextInput.vue";
+import InputLabel from "../InputLabel.vue";
+import InputError from "../InputError.vue";
+import PrimaryButton from "../PrimaryButton.vue";
+import TextArea from "../TextArea.vue";
+import SelectTopic from "../SelectTopic.vue";
+import useCreateDiscussion from "@/Composables/useCreateDiscussion";
+import Svg from "../Svg.vue";
+import { Mentionable } from "vue-mention";
+import useMentionSearch from "@/Composables/useMentionSearch";
 
-const { visible , hideCreateDiscussionForm, form} = useCreateDiscussion()
+const { visible, hideCreateDiscussionForm, form } = useCreateDiscussion();
+const { mentionSearch, mentionSearchResults } = useMentionSearch();
 
 const createDiscussion = () => {
-    form.post(route('discussions.store'), {
+    form.post(route("discussions.store"), {
         onSuccess: () => {
-            form.reset()
-            hideCreateDiscussionForm()
-        }
-    })
-}
+            form.reset();
+            hideCreateDiscussionForm();
+        },
+    });
+};
 </script>
 
 <template>
     <div>
-        <FixedFormWrapper v-if="visible" v-on:submit.prevent="createDiscussion" :form="form">
+        <FixedFormWrapper
+            v-if="visible"
+            v-on:submit.prevent="createDiscussion"
+            :form="form"
+        >
             <template v-slot:header>
                 <div class="flex items-center justify-between">
                     <h1 class="text-lg font-medium">Start a Discussion</h1>
                     <button v-on:click="hideCreateDiscussionForm">
-                        <Svg class="h-5 w-5" name='icon-close' ></Svg>
+                        <Svg class="h-5 w-5" name="icon-close"></Svg>
                     </button>
                 </div>
             </template>
@@ -38,44 +44,68 @@ const createDiscussion = () => {
                 <div class="flex items-start space-x-3">
                     <div class="grow">
                         <div>
-                            <InputLabel for="title" value="Title" class="sr-only" />
-                            <TextInput id="title" type="text" class="w-full" placeholder="Discussion Title"
-                            v-model="form.title" />
-                            <InputError class="mt-2" :message="form.errors.title" />
+                            <InputLabel
+                                for="title"
+                                value="Title"
+                                class="sr-only"
+                            />
+                            <TextInput
+                                id="title"
+                                type="text"
+                                class="w-full"
+                                placeholder="Discussion Title"
+                                v-model="form.title"
+                            />
+                            <InputError
+                                class="mt-2"
+                                :message="form.errors.title"
+                            />
                         </div>
-
                     </div>
-     
+
                     <div>
                         <InputLabel for="topic" value="Topic" class="sr-only" />
-                        <select id="topic" v-model="form.topic_id" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-xs">
-                        <option value="">Choose a topic</option>
-                        <option
-                            :value="topic.id"
-                            v-for="topic in $page.props.topics"
-                            :key="topic.id"
+                        <select
+                            id="topic"
+                            v-model="form.topic_id"
+                            class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-xs"
                         >
-                            {{ topic.title }}
-                        </option>
-                    </select>
-                        <InputError class="mt-2" :message="form.errors.topic_id" />
-
+                            <option value="">Choose a topic</option>
+                            <option
+                                :value="topic.id"
+                                v-for="topic in $page.props.topics"
+                                :key="topic.id"
+                            >
+                                {{ topic.title }}
+                            </option>
+                        </select>
+                        <InputError
+                            class="mt-2"
+                            :message="form.errors.topic_id"
+                        />
                     </div>
                 </div>
                 <div class="mt-4">
                     <InputLabel for="body" value="Body" class="sr-only" />
-                    <TextArea id='body' v-if="!markdownPreviewEnabled" class="w-full h-48 align-top" v-model="form.body"/>
+                    <Mentionable
+                        :keys="['@']"
+                        offset="6"
+                        v-on:search="mentionSearch"
+                        :items="mentionSearchResults"
+                    >
+                        <TextArea
+                            id="body"
+                            v-if="!markdownPreviewEnabled"
+                            class="w-full h-48 align-top"
+                            v-model="form.body"
+                        />
+                    </Mentionable>
                     <InputError class="mt-2" :message="form.errors.body" />
-
                 </div>
             </template>
             <template v-slot:button>
-                <PrimaryButton >
-                    Create
-                </PrimaryButton>
+                <PrimaryButton> Create </PrimaryButton>
             </template>
-
-
         </FixedFormWrapper>
     </div>
 </template>

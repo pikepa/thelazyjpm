@@ -1,26 +1,25 @@
-import { ref } from 'vue'
-import { useForm } from '@inertiajs/vue3'
+import { ref } from "vue";
+import { useForm } from "@inertiajs/vue3";
 
-const visible = ref(false)
+const visible = ref(true);
 
 const form = useForm({
-    topic_id: '',
-    title: '',
-    body: '',
-})
+    topic_id: "",
+    title: "",
+    body: "",
+});
 
-export default () =>{
-
-    const showCreateDiscussionForm = ()=>{
-        visible.value = true
-    }
-    const hideCreateDiscussionForm = ()=>{
-        visible.value = false
-    }
-     return {
+export default () => {
+    const showCreateDiscussionForm = () => {
+        visible.value = true;
+    };
+    const hideCreateDiscussionForm = () => {
+        visible.value = false;
+    };
+    return {
         form,
         visible,
         showCreateDiscussionForm,
-        hideCreateDiscussionForm
-     }
-}
+        hideCreateDiscussionForm,
+    };
+};
