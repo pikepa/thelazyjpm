@@ -33,8 +33,8 @@ class Post extends Model
         return $this->belongsToMany(
             Post::class,
             "mentions",
-            "user_id",
-            "post_id"
+            "post_id",
+            "user_id"
         )->withTimestamps();
     }
 }
