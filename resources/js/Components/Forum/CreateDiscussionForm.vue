@@ -8,7 +8,7 @@ import TextArea from "../TextArea.vue";
 import SelectTopic from "../SelectTopic.vue";
 import useCreateDiscussion from "@/Composables/useCreateDiscussion";
 import Svg from "../Svg.vue";
-import { Mentionable } from "vue-mention";
+import Mentionable from "vue-mention";
 import useMentionSearch from "@/Composables/useMentionSearch";
 
 const { visible, hideCreateDiscussionForm, form } = useCreateDiscussion();

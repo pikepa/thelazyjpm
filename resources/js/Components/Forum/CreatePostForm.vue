@@ -7,7 +7,7 @@ import TextArea from "../TextArea.vue";
 import useCreatePost from "@/Composables/useCreatePost.js";
 // import { useForm } from "@inertiajs/vue3";
 import Svg from "../Svg.vue";
-import { Mentionable } from "vue-mention";
+import Mentionable from "vue-mention";
 import useMentionSearch from "@/Composables/useMentionSearch";
 import { watch } from "vue";
 
