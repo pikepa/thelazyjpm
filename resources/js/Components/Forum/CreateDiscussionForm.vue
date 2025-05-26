@@ -99,6 +99,9 @@ const createDiscussion = () => {
                             class="w-full h-48 align-top"
                             v-model="form.body"
                         />
+                        <template #no-result>
+                            <div class="mention-item">No Username found</div>
+                        </template>
                     </Mentionable>
                     <InputError class="mt-2" :message="form.errors.body" />
                 </div>

@@ -1,3 +1,36 @@
+<script setup lang="ts">
+import FixedFormWrapper from "./FixedFormWrapper.vue";
+import InputLabel from "../InputLabel.vue";
+import InputError from "../InputError.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextArea from "../TextArea.vue";
+import useCreatePost from "@/Composables/useCreatePost.js";
+// import { useForm } from "@inertiajs/vue3";
+import Svg from "../Svg.vue";
+import { Mentionable } from "vue-mention";
+import useMentionSearch from "@/Composables/useMentionSearch";
+import { watch } from "vue";
+
+const { visible, hideCreatePostForm, form, discussion, user } = useCreatePost();
+const { mentionSearch, mentionSearchResults } = useMentionSearch();
+
+watch(user, (user) => {
+    if (!user) {
+        return;
+    }
+    form.body = `@${user.username} ` + form.body;
+});
+
+const createPost = () => {
+    form.post(route("posts.store", discussion.value), {
+        onSuccess: () => {
+            form.reset();
+            hideCreatePostForm();
+        },
+    });
+};
+</script>
+
 <template>
     <div>
         <FixedFormWrapper
@@ -44,28 +77,3 @@
         </FixedFormWrapper>
     </div>
 </template>
-
-<script setup lang="ts">
-import FixedFormWrapper from "./FixedFormWrapper.vue";
-import InputLabel from "../InputLabel.vue";
-import InputError from "../InputError.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TextArea from "../TextArea.vue";
-import useCreatePost from "@/Composables/useCreatePost.js";
-// import { useForm } from "@inertiajs/vue3";
-import Svg from "../Svg.vue";
-import { Mentionable } from "vue-mention";
-import useMentionSearch from "@/Composables/useMentionSearch";
-
-const { visible, hideCreatePostForm, form, discussion } = useCreatePost();
-const { mentionSearch, mentionSearchResults } = useMentionSearch();
-
-const createPost = () => {
-    form.post(route("posts.store", discussion.value), {
-        onSuccess: () => {
-            form.reset();
-            hideCreatePostForm();
-        },
-    });
-};
-</script>
